@@ -1,0 +1,26 @@
+name: Cloudways Deployment (Production)
+
+on:
+  push:
+    branches:
+      - main
+jobs:
+  tag:
+    name: Deployment (production)
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+          
+      - name: Cloudways API Git Pull
+        uses: roelmagdaleno/cloudways-api-git-pull-action@stable
+        with:
+            email: ${{ vars.CLOUDWAYS_EMAIL }}
+            api-key: ${{ secrets.CLOUDWAYS_API_KEY }}
+            server-id: ${{ vars.SERVER_ID_PRODUCTION }}
+            app-id: ${{ vars.APP_ID_PRODUCTION }}
+            branch-name: main
+            deploy-path: wp-content/
+
